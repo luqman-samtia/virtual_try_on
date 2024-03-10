@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png')}}">
+
+    <title> Virtual Try On</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css')}}">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base-template.css')}}">
+
+    {% block style %}
+    {% endblock %}
+
+  </head>
+
+  <body>
+    <div class="main">
+      <!-- navbar -->
+      <nav class="navbar navbar-light bg-white navbar-expand-md fixed-top">
+        <a class="navbar-brand" href="/">
+          <img src="{{ url_for('static', filename='images/logo1.png')}}" width=80 height=26 class="rounded" alt="cmate">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="{{ url_for('upload_profile_image', updateprofile=True, nextpage='home')}}">update Profile Image</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- body-content -->
+      <main role="main" class="container">
+
+      {% block content %}
+      {% endblock %}
+
+      </main><!-- /.container -->
+      <!-- footer -->
+      <footer class="container-fluid py-3">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img src="{{ url_for('static', filename='images/logo.png')}}" width="80" height="26" class="rounded">
+            <small class="d-block mb-3 text-muted">&copy; 2024</small>
+          </div>
+
+          <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="{{ url_for ('footer', link='how-to-use.html')}}">How to use</a></li>
+              <li><a class="text-muted" href="{{ url_for ('footer', link='guidelines.html')}}">Guidelines</a></li>
+              <li><a class="text-muted" href="{{ url_for ('footer', link='faq.html')}}">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Social</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="https://github.com/xanjay" target="_blank">Github</a></li>
+              <li><a class="text-muted" href="https://stackoverflow.com/users/9924439/xanjay" target="_blank">StackOverflow</a></li>
+              <li><a class="text-muted" href="https://www.linkedin.com/in/sanjay-parajuli/" target="_blank">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Company</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="{{ url_for ('footer', link='about-cmate.html')}}">About Virtual Try On</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js')}}"></script>
+    <script>window.jQuery || document.write('<script src="{{ url_for("static", filename="js/jquery-slim.min.js")}}"><\/script>')</script>
+    <script src="{{ url_for('static', filename='js/popper.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

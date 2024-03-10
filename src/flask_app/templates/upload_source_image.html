@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- default body -->
+<div class="row">
+    <div class="col-6 col-md">
+        {% if source_image %}
+          <img src="{{ url_for('get_source_image', filename=source_image)}}" class="img-fluid img-box">
+        {% else %}
+          <img src="{{ url_for('static', filename='images/samples/source_images/sample-source-image3.jpg')}}" class="img-fluid img-box">
+        {% endif %}
+      </div>
+
+    <div class="col-6 col-md">
+        <h1 class="display-4">CMate:Virtual Clothing Try On</h1>
+
+        <!-- flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <span>{{ message }}</span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <!-- upload source image -->
+            <p>
+            <div class="form-group">
+                <label>Paste Image URL containing source cloth.</label><br>
+                {% if form.source_image_url.errors %}
+                    {{form.source_image_url(class="form-control is-invalid", accept="image/*")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.source_image_url.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.source_image_url(class="form-control", accept="image/*")}}
+                {% endif %}
+                <small id="sourceImageHelp" class="form-text text-muted">Tip: Best when cloth is fully seen in image.</small>
+            </div>
+            </p>
+            
+            <div>
+                {{ form.submit(class="btn btn-outline-info", disabled="True") }}
+            </div>
+            <!-- show loading on submit -->
+            <p hidden class="loader">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading Source image...
+            </p>
+            
+        </form>
+        <!-- show sample source images -->
+        <section class="js-sample-images">
+
+        </section>
+        
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+    $('document').ready(function(){
+        $('#source_image_url').on('input', function(){
+        var source_image_url = $('#source_image_url').val();
+        // console.log("File details:" + source_image_url);
+
+        if (source_image_url != '') {
+            $("#submit").removeAttr("disabled");
+        }
+        else{
+            $("#submit").attr("disabled", "True");
+        }
+        })
+        // toggle loader
+        $("#submit").click(function() {
+            $("p.loader").removeAttr("hidden");
+        });
+    });
+
+    $('document').ready(function(){
+        sample_image_section = $('section.js-sample-images')
+        // api call for sample source images
+        $.ajax({
+                    type: "GET",
+                    url: "/sample_source_images/",
+                    data: {},
+                    dataType: "json",
+                    success: function(data){
+                        sample_image_section.append("<label style='display:block;'>Sample Images (Pick One):</label>")
+                        const images_list = data["sample_source_images"]
+                        for (var i=0; i<images_list.length; i++){
+                            var $img =  $("<img>", {"class": "recent-images--hover my-2 mx-1 rounded img-fluid", "style": "height:50px;"});
+                            $img.attr('src', '/source_images/'+images_list[i])
+                            var $a_tag = $("<a>", {"href":"/pick_source_image/"+images_list[i] })
+                            sample_image_section.append($a_tag.append($img))
+                        }
+                    }
+                });
+    })
+</script>
+{% endblock %}

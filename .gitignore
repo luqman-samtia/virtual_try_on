@@ -1,0 +1,10 @@
+.vscode/
+venv/
+
+__pycache__/
+
+logs/
+files/
+
+*.pb
+*.caffemodel

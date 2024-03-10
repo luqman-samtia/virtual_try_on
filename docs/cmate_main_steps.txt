@@ -1,0 +1,8 @@
+CMate Cloth Blend Abstract Steps:
+#1 get cloth segmentation from source image
+#2 get source image shoulder location
+#3 get profile image shoulder location
+#4 transform source seg to match profile image: resize source image and shoulder points
+	- find resize factor using source img.
+#6 crop square segmenetation.
+#7 blend source seg with profile (backoff=rightshoulder-start_of_square_seg)
